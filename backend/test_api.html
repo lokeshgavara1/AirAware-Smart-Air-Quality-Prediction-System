@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test AirAware API</title>
+</head>
+<body>
+    <h1>Test AirAware API Endpoints</h1>
+    <button onclick="testRoot()">Test Root</button>
+    <button onclick="testLatestPrediction()">Test Latest Prediction</button>
+    <button onclick="testBatchPrediction()">Test Batch Prediction</button>
+    <button onclick="testAccuracy()">Test Accuracy</button>
+    <button onclick="testHeatmap()">Test Heatmap</button>
+    
+    <div id="result" style="margin-top: 20px; padding: 10px; background-color: #f0f0f0;">
+        <h3>Results:</h3>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://127.0.0.1:8000';
+        
+        function displayResult(data) {
+            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        }
+        
+        function testRoot() {
+            fetch(BASE_URL + '/')
+                .then(response => response.json())
+                .then(data => displayResult(data))
+                .catch(error => displayResult({error: error.message}));
+        }
+        
+        function testLatestPrediction() {
+            fetch(BASE_URL + '/api/v1/predict/latest')
+                .then(response => response.json())
+                .then(data => displayResult(data))
+                .catch(error => displayResult({error: error.message}));
+        }
+        
+        function testBatchPrediction() {
+            fetch(BASE_URL + '/api/v1/predict/batch?limit=10')
+                .then(response => response.json())
+                .then(data => displayResult(data))
+                .catch(error => displayResult({error: error.message}));
+        }
+        
+        function testAccuracy() {
+            fetch(BASE_URL + '/api/v1/predict/accuracy')
+                .then(response => response.json())
+                .then(data => displayResult(data))
+                .catch(error => displayResult({error: error.message}));
+        }
+        
+        function testHeatmap() {
+            fetch(BASE_URL + '/api/v1/predict/heatmap')
+                .then(response => response.json())
+                .then(data => displayResult(data))
+                .catch(error => displayResult({error: error.message}));
+        }
+    </script>
+</body>
+</html>

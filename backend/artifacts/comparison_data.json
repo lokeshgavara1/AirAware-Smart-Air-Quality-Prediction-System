@@ -1,0 +1,1754 @@
+[
+  {
+    "index": 0,
+    "actual": 71.3,
+    "predicted": 83.17885017414663,
+    "percentage_error": 16.660378925871857
+  },
+  {
+    "index": 1,
+    "actual": 81.41,
+    "predicted": 106.06419688948857,
+    "percentage_error": 30.283990774460847
+  },
+  {
+    "index": 2,
+    "actual": 88.12,
+    "predicted": 113.71836650331514,
+    "percentage_error": 29.049439971987212
+  },
+  {
+    "index": 3,
+    "actual": 102.8,
+    "predicted": 112.4082234761466,
+    "percentage_error": 9.346520891193197
+  },
+  {
+    "index": 4,
+    "actual": 161.2,
+    "predicted": 169.63748695203782,
+    "percentage_error": 5.23417304716987
+  },
+  {
+    "index": 5,
+    "actual": 71.15,
+    "predicted": 70.76899276705723,
+    "percentage_error": 0.5354985705450152
+  },
+  {
+    "index": 6,
+    "actual": 49.75,
+    "predicted": 63.87929257364363,
+    "percentage_error": 28.400588087725893
+  },
+  {
+    "index": 7,
+    "actual": 39.2,
+    "predicted": 43.635514654344284,
+    "percentage_error": 11.315088403939493
+  },
+  {
+    "index": 8,
+    "actual": 21.96,
+    "predicted": 42.80663550691974,
+    "percentage_error": 94.9300341845161
+  },
+  {
+    "index": 9,
+    "actual": 48.02,
+    "predicted": 77.80538630776948,
+    "percentage_error": 62.02704353971152
+  },
+  {
+    "index": 10,
+    "actual": 27.42,
+    "predicted": 33.221278018773305,
+    "percentage_error": 21.15710437189388
+  },
+  {
+    "index": 11,
+    "actual": 79.87,
+    "predicted": 84.2130527295351,
+    "percentage_error": 5.437652096575796
+  },
+  {
+    "index": 12,
+    "actual": 87.44,
+    "predicted": 79.99175192712667,
+    "percentage_error": 8.518124511520272
+  },
+  {
+    "index": 13,
+    "actual": 33.67,
+    "predicted": 62.609191621350185,
+    "percentage_error": 85.9494850648951
+  },
+  {
+    "index": 14,
+    "actual": 70.53,
+    "predicted": 116.38524101016837,
+    "percentage_error": 65.01522899499273
+  },
+  {
+    "index": 15,
+    "actual": 79.2,
+    "predicted": 116.6624836929591,
+    "percentage_error": 47.30111577393825
+  },
+  {
+    "index": 16,
+    "actual": 37.02,
+    "predicted": 45.5654736932462,
+    "percentage_error": 23.08339733453861
+  },
+  {
+    "index": 17,
+    "actual": 52.82,
+    "predicted": 104.53316006782289,
+    "percentage_error": 97.90450599739282
+  },
+  {
+    "index": 18,
+    "actual": 72.18,
+    "predicted": 121.78254981290404,
+    "percentage_error": 68.72062872389031
+  },
+  {
+    "index": 19,
+    "actual": 91.85,
+    "predicted": 150.94768551107558,
+    "percentage_error": 64.34151933704473
+  },
+  {
+    "index": 20,
+    "actual": 150.47,
+    "predicted": 167.47690308036204,
+    "percentage_error": 11.302520821666802
+  },
+  {
+    "index": 21,
+    "actual": 98.54,
+    "predicted": 182.63985579502884,
+    "percentage_error": 85.3459060229641
+  },
+  {
+    "index": 22,
+    "actual": 159.95,
+    "predicted": 149.42674001608026,
+    "percentage_error": 6.579093456655036
+  },
+  {
+    "index": 23,
+    "actual": 71.18,
+    "predicted": 97.96428107744391,
+    "percentage_error": 37.628942227372725
+  },
+  {
+    "index": 24,
+    "actual": 29.09,
+    "predicted": 47.68916731117107,
+    "percentage_error": 63.93663565201467
+  },
+  {
+    "index": 25,
+    "actual": 69.61,
+    "predicted": 78.19456247993809,
+    "percentage_error": 12.332369601979725
+  },
+  {
+    "index": 26,
+    "actual": 90.28,
+    "predicted": 79.74950944516179,
+    "percentage_error": 11.664256263666603
+  },
+  {
+    "index": 27,
+    "actual": 45.09,
+    "predicted": 52.78969138452837,
+    "percentage_error": 17.07627275344503
+  },
+  {
+    "index": 28,
+    "actual": 89.92,
+    "predicted": 71.9772551603342,
+    "percentage_error": 19.954120150873894
+  },
+  {
+    "index": 29,
+    "actual": 9.61,
+    "predicted": 27.03521985331877,
+    "percentage_error": 181.32382781809338
+  },
+  {
+    "index": 30,
+    "actual": 66.23,
+    "predicted": 76.16068669156442,
+    "percentage_error": 14.994242324572577
+  },
+  {
+    "index": 31,
+    "actual": 40.21,
+    "predicted": 52.67908251696322,
+    "percentage_error": 31.00990429486003
+  },
+  {
+    "index": 32,
+    "actual": 108.1,
+    "predicted": 119.30334603251116,
+    "percentage_error": 10.363872370500614
+  },
+  {
+    "index": 33,
+    "actual": 114.38,
+    "predicted": 144.05717213075758,
+    "percentage_error": 25.94612006535896
+  },
+  {
+    "index": 34,
+    "actual": 30.14,
+    "predicted": 53.08414217752964,
+    "percentage_error": 76.12522288496895
+  },
+  {
+    "index": 35,
+    "actual": 233.5,
+    "predicted": 173.98433050441628,
+    "percentage_error": 25.4885094199502
+  },
+  {
+    "index": 36,
+    "actual": 115.05,
+    "predicted": 111.69044722731883,
+    "percentage_error": 2.920080636837175
+  },
+  {
+    "index": 37,
+    "actual": 93.69,
+    "predicted": 88.59471426677351,
+    "percentage_error": 5.438452058092102
+  },
+  {
+    "index": 38,
+    "actual": 126.34,
+    "predicted": 130.86655875753956,
+    "percentage_error": 3.5828389722491383
+  },
+  {
+    "index": 39,
+    "actual": 31.95,
+    "predicted": 36.422236481214426,
+    "percentage_error": 13.997610269841712
+  },
+  {
+    "index": 40,
+    "actual": 206.34,
+    "predicted": 183.1512723146821,
+    "percentage_error": 11.238115578810651
+  },
+  {
+    "index": 41,
+    "actual": 37.07,
+    "predicted": 52.7881764294906,
+    "percentage_error": 42.4013391677653
+  },
+  {
+    "index": 42,
+    "actual": 95.24,
+    "predicted": 89.89371682666336,
+    "percentage_error": 5.613485062302216
+  },
+  {
+    "index": 43,
+    "actual": 37.25,
+    "predicted": 38.567732977646145,
+    "percentage_error": 3.537538195023208
+  },
+  {
+    "index": 44,
+    "actual": 100.51,
+    "predicted": 131.30341636703406,
+    "percentage_error": 30.637166816271073
+  },
+  {
+    "index": 45,
+    "actual": 42.68,
+    "predicted": 54.74367873884213,
+    "percentage_error": 28.265414102254283
+  },
+  {
+    "index": 46,
+    "actual": 121.52,
+    "predicted": 145.25878288608777,
+    "percentage_error": 19.53487729269896
+  },
+  {
+    "index": 47,
+    "actual": 127.6,
+    "predicted": 170.1868898152842,
+    "percentage_error": 33.37530549787163
+  },
+  {
+    "index": 48,
+    "actual": 22.75,
+    "predicted": 29.689758525048312,
+    "percentage_error": 30.504433077135435
+  },
+  {
+    "index": 49,
+    "actual": 62.69,
+    "predicted": 77.3889907636169,
+    "percentage_error": 23.447106019487805
+  },
+  {
+    "index": 50,
+    "actual": 100.2,
+    "predicted": 70.04220562147918,
+    "percentage_error": 30.097599180160493
+  },
+  {
+    "index": 51,
+    "actual": 98.06,
+    "predicted": 116.39132237987701,
+    "percentage_error": 18.693985702505618
+  },
+  {
+    "index": 52,
+    "actual": 169.8,
+    "predicted": 181.84959899746923,
+    "percentage_error": 7.0963480550466524
+  },
+  {
+    "index": 53,
+    "actual": 78.33,
+    "predicted": 94.63258751687908,
+    "percentage_error": 20.812699498122157
+  },
+  {
+    "index": 54,
+    "actual": 58.47,
+    "predicted": 72.31515957782777,
+    "percentage_error": 23.679082568544164
+  },
+  {
+    "index": 55,
+    "actual": 157.53,
+    "predicted": 53.17275144883512,
+    "percentage_error": 66.24595223206047
+  },
+  {
+    "index": 56,
+    "actual": 44.65,
+    "predicted": 58.88904680954951,
+    "percentage_error": 31.890362395407646
+  },
+  {
+    "index": 57,
+    "actual": 33.35,
+    "predicted": 52.93191040052563,
+    "percentage_error": 58.716373015069344
+  },
+  {
+    "index": 58,
+    "actual": 38.75,
+    "predicted": 51.9674089003359,
+    "percentage_error": 34.109442323447475
+  },
+  {
+    "index": 59,
+    "actual": 35.85,
+    "predicted": 46.98693480228201,
+    "percentage_error": 31.065369044022333
+  },
+  {
+    "index": 60,
+    "actual": 222.87,
+    "predicted": 177.5801944318776,
+    "percentage_error": 20.32117627680819
+  },
+  {
+    "index": 61,
+    "actual": 23.78,
+    "predicted": 40.314057167630594,
+    "percentage_error": 69.52925638196213
+  },
+  {
+    "index": 62,
+    "actual": 110.05,
+    "predicted": 155.32826651567723,
+    "percentage_error": 41.14335894200566
+  },
+  {
+    "index": 63,
+    "actual": 98.1,
+    "predicted": 76.43202788726711,
+    "percentage_error": 22.087637219911198
+  },
+  {
+    "index": 64,
+    "actual": 23.61,
+    "predicted": 29.03474286608609,
+    "percentage_error": 22.976462795790308
+  },
+  {
+    "index": 65,
+    "actual": 46.95,
+    "predicted": 78.12732850496177,
+    "percentage_error": 66.40538552707511
+  },
+  {
+    "index": 66,
+    "actual": 212.44,
+    "predicted": 125.40848855668376,
+    "percentage_error": 40.967572699734625
+  },
+  {
+    "index": 67,
+    "actual": 31.83,
+    "predicted": 40.010621390034146,
+    "percentage_error": 25.7009782910278
+  },
+  {
+    "index": 68,
+    "actual": 42.73,
+    "predicted": 45.320725500547354,
+    "percentage_error": 6.063013106827422
+  },
+  {
+    "index": 69,
+    "actual": 206.86,
+    "predicted": 184.32915130145187,
+    "percentage_error": 10.891834428380614
+  },
+  {
+    "index": 70,
+    "actual": 45.3,
+    "predicted": 77.00330357343807,
+    "percentage_error": 69.98521760140856
+  },
+  {
+    "index": 71,
+    "actual": 157.49,
+    "predicted": 111.00015425559852,
+    "percentage_error": 29.519236614643145
+  },
+  {
+    "index": 72,
+    "actual": 58.68,
+    "predicted": 72.90615739567367,
+    "percentage_error": 24.243622010350503
+  },
+  {
+    "index": 73,
+    "actual": 232.78,
+    "predicted": 214.9163120269713,
+    "percentage_error": 7.674064770611179
+  },
+  {
+    "index": 74,
+    "actual": 23.99,
+    "predicted": 43.26486606286696,
+    "percentage_error": 80.34541918660676
+  },
+  {
+    "index": 75,
+    "actual": 69.63,
+    "predicted": 132.54918843117184,
+    "percentage_error": 90.36218358634476
+  },
+  {
+    "index": 76,
+    "actual": 18.45,
+    "predicted": 31.021773436347747,
+    "percentage_error": 68.13969342193901
+  },
+  {
+    "index": 77,
+    "actual": 81.9,
+    "predicted": 96.71653424612522,
+    "percentage_error": 18.09100640552529
+  },
+  {
+    "index": 78,
+    "actual": 174.53,
+    "predicted": 177.38275053952492,
+    "percentage_error": 1.6345330542169938
+  },
+  {
+    "index": 79,
+    "actual": 100.87,
+    "predicted": 97.17258043394344,
+    "percentage_error": 3.6655294597566837
+  },
+  {
+    "index": 80,
+    "actual": 181.46,
+    "predicted": 142.54968190578325,
+    "percentage_error": 21.442917499292825
+  },
+  {
+    "index": 81,
+    "actual": 55.45,
+    "predicted": 98.49484618498026,
+    "percentage_error": 77.62821674477955
+  },
+  {
+    "index": 82,
+    "actual": 46.4,
+    "predicted": 51.293133101393686,
+    "percentage_error": 10.545545477141568
+  },
+  {
+    "index": 83,
+    "actual": 93.53,
+    "predicted": 91.09552157949408,
+    "percentage_error": 2.6028850855403887
+  },
+  {
+    "index": 84,
+    "actual": 115.54,
+    "predicted": 96.71593254935301,
+    "percentage_error": 16.292251558462
+  },
+  {
+    "index": 85,
+    "actual": 52.53,
+    "predicted": 51.815297392637824,
+    "percentage_error": 1.3605608364023936
+  },
+  {
+    "index": 86,
+    "actual": 44.98,
+    "predicted": 58.26697200327575,
+    "percentage_error": 29.539733222044802
+  },
+  {
+    "index": 87,
+    "actual": 159.71,
+    "predicted": 116.88801174745535,
+    "percentage_error": 26.81234002413415
+  },
+  {
+    "index": 88,
+    "actual": 121.69,
+    "predicted": 110.90016254527006,
+    "percentage_error": 8.8666590966636
+  },
+  {
+    "index": 89,
+    "actual": 14.57,
+    "predicted": 30.829490665873337,
+    "percentage_error": 111.59568061683827
+  },
+  {
+    "index": 90,
+    "actual": 91.54,
+    "predicted": 62.73088278658505,
+    "percentage_error": 31.47161592026978
+  },
+  {
+    "index": 91,
+    "actual": 11.91,
+    "predicted": 41.05810261724319,
+    "percentage_error": 244.73637797853226
+  },
+  {
+    "index": 92,
+    "actual": 46.59,
+    "predicted": 70.0898979074971,
+    "percentage_error": 50.439789455885595
+  },
+  {
+    "index": 93,
+    "actual": 227.78,
+    "predicted": 206.45504240962595,
+    "percentage_error": 9.362085165674799
+  },
+  {
+    "index": 94,
+    "actual": 186.0,
+    "predicted": 136.28654228104875,
+    "percentage_error": 26.727665440296374
+  },
+  {
+    "index": 95,
+    "actual": 37.13,
+    "predicted": 43.987375119533596,
+    "percentage_error": 18.46855674530997
+  },
+  {
+    "index": 96,
+    "actual": 37.73,
+    "predicted": 58.07289807114562,
+    "percentage_error": 53.91703702927545
+  },
+  {
+    "index": 97,
+    "actual": 54.47,
+    "predicted": 118.23122847730511,
+    "percentage_error": 117.05751510428696
+  },
+  {
+    "index": 98,
+    "actual": 46.72,
+    "predicted": 72.20105020409568,
+    "percentage_error": 54.539919101232194
+  },
+  {
+    "index": 99,
+    "actual": 222.71,
+    "predicted": 242.96239653757067,
+    "percentage_error": 9.093617950505438
+  },
+  {
+    "index": 100,
+    "actual": 62.15,
+    "predicted": 74.82794457288928,
+    "percentage_error": 20.398945410924025
+  },
+  {
+    "index": 101,
+    "actual": 91.93,
+    "predicted": 73.63344534465635,
+    "percentage_error": 19.902702768784568
+  },
+  {
+    "index": 102,
+    "actual": 138.97,
+    "predicted": 97.72661552614193,
+    "percentage_error": 29.677904924701785
+  },
+  {
+    "index": 103,
+    "actual": 222.01,
+    "predicted": 160.35550943967746,
+    "percentage_error": 27.771042097348108
+  },
+  {
+    "index": 104,
+    "actual": 76.01,
+    "predicted": 71.77913130988196,
+    "percentage_error": 5.566200092248446
+  },
+  {
+    "index": 105,
+    "actual": 24.66,
+    "predicted": 25.943016642857636,
+    "percentage_error": 5.20282499131239
+  },
+  {
+    "index": 106,
+    "actual": 80.56,
+    "predicted": 96.79019775969651,
+    "percentage_error": 20.14672015851106
+  },
+  {
+    "index": 107,
+    "actual": 71.87,
+    "predicted": 101.76390312097257,
+    "percentage_error": 41.594410909938176
+  },
+  {
+    "index": 108,
+    "actual": 125.53,
+    "predicted": 110.3794052886184,
+    "percentage_error": 12.069301928926631
+  },
+  {
+    "index": 109,
+    "actual": 31.21,
+    "predicted": 55.19123044411232,
+    "percentage_error": 76.83829043291355
+  },
+  {
+    "index": 110,
+    "actual": 40.81,
+    "predicted": 51.699934819512585,
+    "percentage_error": 26.684476401648084
+  },
+  {
+    "index": 111,
+    "actual": 307.96,
+    "predicted": 133.1646229900167,
+    "percentage_error": 56.75911709637072
+  },
+  {
+    "index": 112,
+    "actual": 50.26,
+    "predicted": 85.10160300926186,
+    "percentage_error": 69.32272783378804
+  },
+  {
+    "index": 113,
+    "actual": 117.66,
+    "predicted": 84.563405197278,
+    "percentage_error": 28.129011391060683
+  },
+  {
+    "index": 114,
+    "actual": 168.08,
+    "predicted": 142.96426919700468,
+    "percentage_error": 14.942724180744484
+  },
+  {
+    "index": 115,
+    "actual": 118.79,
+    "predicted": 128.36012374213254,
+    "percentage_error": 8.056337858517162
+  },
+  {
+    "index": 116,
+    "actual": 53.83,
+    "predicted": 86.61266458884218,
+    "percentage_error": 60.90036148772465
+  },
+  {
+    "index": 117,
+    "actual": 24.91,
+    "predicted": 27.15934601306048,
+    "percentage_error": 9.029891662225925
+  },
+  {
+    "index": 118,
+    "actual": 94.57,
+    "predicted": 76.09697246197048,
+    "percentage_error": 19.53370787567888
+  },
+  {
+    "index": 119,
+    "actual": 184.6,
+    "predicted": 186.42244498992272,
+    "percentage_error": 0.9872399728725513
+  },
+  {
+    "index": 120,
+    "actual": 67.12,
+    "predicted": 87.09719474733924,
+    "percentage_error": 29.763400994247974
+  },
+  {
+    "index": 121,
+    "actual": 49.88,
+    "predicted": 49.777998449598876,
+    "percentage_error": 0.2044938861289633
+  },
+  {
+    "index": 122,
+    "actual": 102.56,
+    "predicted": 58.23666396936177,
+    "percentage_error": 43.21698130912464
+  },
+  {
+    "index": 123,
+    "actual": 191.22,
+    "predicted": 142.2364229043576,
+    "percentage_error": 25.616346143521806
+  },
+  {
+    "index": 124,
+    "actual": 129.2,
+    "predicted": 87.23871260476571,
+    "percentage_error": 32.47777662169836
+  },
+  {
+    "index": 125,
+    "actual": 45.35,
+    "predicted": 63.879964482918325,
+    "percentage_error": 40.85989963157293
+  },
+  {
+    "index": 126,
+    "actual": 199.0,
+    "predicted": 129.56393763654415,
+    "percentage_error": 34.892493649977816
+  },
+  {
+    "index": 127,
+    "actual": 29.28,
+    "predicted": 35.078399548797535,
+    "percentage_error": 19.803277147532558
+  },
+  {
+    "index": 128,
+    "actual": 47.01,
+    "predicted": 76.50589919002584,
+    "percentage_error": 62.743882556957765
+  },
+  {
+    "index": 129,
+    "actual": 23.33,
+    "predicted": 35.345281547775464,
+    "percentage_error": 51.50142112205515
+  },
+  {
+    "index": 130,
+    "actual": 24.87,
+    "predicted": 36.64299172772729,
+    "percentage_error": 47.33812516175027
+  },
+  {
+    "index": 131,
+    "actual": 42.77,
+    "predicted": 53.22356118085941,
+    "percentage_error": 24.441340146970795
+  },
+  {
+    "index": 132,
+    "actual": 111.72,
+    "predicted": 108.76503959761877,
+    "percentage_error": 2.644969926943459
+  },
+  {
+    "index": 133,
+    "actual": 38.03,
+    "predicted": 46.561208411494874,
+    "percentage_error": 22.432838315789834
+  },
+  {
+    "index": 134,
+    "actual": 28.46,
+    "predicted": 44.15047369770372,
+    "percentage_error": 55.13167146065958
+  },
+  {
+    "index": 135,
+    "actual": 27.91,
+    "predicted": 46.678757259200715,
+    "percentage_error": 67.24742837406204
+  },
+  {
+    "index": 136,
+    "actual": 134.94,
+    "predicted": 98.91795578052263,
+    "percentage_error": 26.694860100398227
+  },
+  {
+    "index": 137,
+    "actual": 198.9,
+    "predicted": 159.87964558170046,
+    "percentage_error": 19.618076630618173
+  },
+  {
+    "index": 138,
+    "actual": 117.48,
+    "predicted": 141.8428413186886,
+    "percentage_error": 20.7378628861837
+  },
+  {
+    "index": 139,
+    "actual": 60.97,
+    "predicted": 77.02620189624312,
+    "percentage_error": 26.334593892476832
+  },
+  {
+    "index": 140,
+    "actual": 28.0,
+    "predicted": 51.70754369136979,
+    "percentage_error": 84.66979889774926
+  },
+  {
+    "index": 141,
+    "actual": 105.02,
+    "predicted": 101.05225499739856,
+    "percentage_error": 3.7780851291196274
+  },
+  {
+    "index": 142,
+    "actual": 119.0,
+    "predicted": 126.09876416156321,
+    "percentage_error": 5.965348034927067
+  },
+  {
+    "index": 143,
+    "actual": 98.49,
+    "predicted": 134.67557035905776,
+    "percentage_error": 36.740349638600634
+  },
+  {
+    "index": 144,
+    "actual": 110.41,
+    "predicted": 115.05519219523532,
+    "percentage_error": 4.207220537302169
+  },
+  {
+    "index": 145,
+    "actual": 66.3,
+    "predicted": 72.83265077325598,
+    "percentage_error": 9.853168587113093
+  },
+  {
+    "index": 146,
+    "actual": 34.89,
+    "predicted": 42.55748670861324,
+    "percentage_error": 21.97617285357764
+  },
+  {
+    "index": 147,
+    "actual": 55.57,
+    "predicted": 91.20261686187006,
+    "percentage_error": 64.12203862132455
+  },
+  {
+    "index": 148,
+    "actual": 38.53,
+    "predicted": 48.16913683464599,
+    "percentage_error": 25.017225109384867
+  },
+  {
+    "index": 149,
+    "actual": 24.1,
+    "predicted": 39.31425354417841,
+    "percentage_error": 63.12968275592702
+  },
+  {
+    "index": 150,
+    "actual": 116.96,
+    "predicted": 202.79349730899327,
+    "percentage_error": 73.38705310276443
+  },
+  {
+    "index": 151,
+    "actual": 51.08,
+    "predicted": 67.98066803812826,
+    "percentage_error": 33.08666413102635
+  },
+  {
+    "index": 152,
+    "actual": 61.31,
+    "predicted": 88.90265234790134,
+    "percentage_error": 45.00514165372913
+  },
+  {
+    "index": 153,
+    "actual": 24.95,
+    "predicted": 39.36011011820719,
+    "percentage_error": 57.75595237758393
+  },
+  {
+    "index": 154,
+    "actual": 39.5,
+    "predicted": 55.742885095578345,
+    "percentage_error": 41.12122809007176
+  },
+  {
+    "index": 155,
+    "actual": 135.05,
+    "predicted": 102.66773212709347,
+    "percentage_error": 23.977984356095178
+  },
+  {
+    "index": 156,
+    "actual": 66.15,
+    "predicted": 45.590339255484515,
+    "percentage_error": 31.08036393728721
+  },
+  {
+    "index": 157,
+    "actual": 66.59,
+    "predicted": 68.92865284505214,
+    "percentage_error": 3.5120180883798437
+  },
+  {
+    "index": 158,
+    "actual": 88.37,
+    "predicted": 75.48880387863096,
+    "percentage_error": 14.576435579233952
+  },
+  {
+    "index": 159,
+    "actual": 163.96,
+    "predicted": 141.43953934174243,
+    "percentage_error": 13.735338288764073
+  },
+  {
+    "index": 160,
+    "actual": 209.32,
+    "predicted": 254.0058788610924,
+    "percentage_error": 21.348117170405324
+  },
+  {
+    "index": 161,
+    "actual": 29.79,
+    "predicted": 40.82531634114261,
+    "percentage_error": 37.043693659424676
+  },
+  {
+    "index": 162,
+    "actual": 64.53,
+    "predicted": 76.10000719017401,
+    "percentage_error": 17.929656268671952
+  },
+  {
+    "index": 163,
+    "actual": 132.42,
+    "predicted": 132.6809529846425,
+    "percentage_error": 0.197064631205634
+  },
+  {
+    "index": 164,
+    "actual": 29.61,
+    "predicted": 30.062781391124616,
+    "percentage_error": 1.529150257090905
+  },
+  {
+    "index": 165,
+    "actual": 40.55,
+    "predicted": 47.536100030919926,
+    "percentage_error": 17.228360125573193
+  },
+  {
+    "index": 166,
+    "actual": 63.12,
+    "predicted": 62.3339908650878,
+    "percentage_error": 1.2452616205833313
+  },
+  {
+    "index": 167,
+    "actual": 40.95,
+    "predicted": 59.11141402644407,
+    "percentage_error": 44.35021740279382
+  },
+  {
+    "index": 168,
+    "actual": 100.48,
+    "predicted": 140.29959467256936,
+    "percentage_error": 39.62937367891058
+  },
+  {
+    "index": 169,
+    "actual": 26.99,
+    "predicted": 35.94052328859419,
+    "percentage_error": 33.162368612798055
+  },
+  {
+    "index": 170,
+    "actual": 235.88,
+    "predicted": 213.96316992311904,
+    "percentage_error": 9.291516905579513
+  },
+  {
+    "index": 171,
+    "actual": 44.43,
+    "predicted": 46.819308489282186,
+    "percentage_error": 5.377691850736408
+  },
+  {
+    "index": 172,
+    "actual": 54.65,
+    "predicted": 71.92383277431989,
+    "percentage_error": 31.608111206440793
+  },
+  {
+    "index": 173,
+    "actual": 30.18,
+    "predicted": 35.84672644987945,
+    "percentage_error": 18.776429588732434
+  },
+  {
+    "index": 174,
+    "actual": 81.8,
+    "predicted": 80.58163905795251,
+    "percentage_error": 1.489438804459025
+  },
+  {
+    "index": 175,
+    "actual": 48.56,
+    "predicted": 76.81065222890831,
+    "percentage_error": 58.17679618803193
+  },
+  {
+    "index": 176,
+    "actual": 58.68,
+    "predicted": 61.32614890123729,
+    "percentage_error": 4.509456205244187
+  },
+  {
+    "index": 177,
+    "actual": 29.68,
+    "predicted": 53.651871800059176,
+    "percentage_error": 80.76776212957944
+  },
+  {
+    "index": 178,
+    "actual": 13.17,
+    "predicted": 29.266525655194403,
+    "percentage_error": 122.22115152007899
+  },
+  {
+    "index": 179,
+    "actual": 28.07,
+    "predicted": 33.03692789692645,
+    "percentage_error": 17.694791225245634
+  },
+  {
+    "index": 180,
+    "actual": 42.75,
+    "predicted": 31.066169110937537,
+    "percentage_error": 27.330598570906346
+  },
+  {
+    "index": 181,
+    "actual": 29.67,
+    "predicted": 70.67558072287962,
+    "percentage_error": 138.20552990522282
+  },
+  {
+    "index": 182,
+    "actual": 15.18,
+    "predicted": 31.837856134084124,
+    "percentage_error": 109.73554765536313
+  },
+  {
+    "index": 183,
+    "actual": 84.01,
+    "predicted": 92.17662870198684,
+    "percentage_error": 9.721019761917434
+  },
+  {
+    "index": 184,
+    "actual": 171.23,
+    "predicted": 136.19990536645753,
+    "percentage_error": 20.45791895902731
+  },
+  {
+    "index": 185,
+    "actual": 121.86,
+    "predicted": 129.75520068360666,
+    "percentage_error": 6.478910785825259
+  },
+  {
+    "index": 186,
+    "actual": 53.09,
+    "predicted": 65.4894560506454,
+    "percentage_error": 23.355539745046897
+  },
+  {
+    "index": 187,
+    "actual": 117.78,
+    "predicted": 92.13203331853737,
+    "percentage_error": 21.77616461323029
+  },
+  {
+    "index": 188,
+    "actual": 23.45,
+    "predicted": 34.70255630339052,
+    "percentage_error": 47.985314726612046
+  },
+  {
+    "index": 189,
+    "actual": 30.08,
+    "predicted": 41.681170739922784,
+    "percentage_error": 38.567721874743306
+  },
+  {
+    "index": 190,
+    "actual": 69.99,
+    "predicted": 84.57005985728848,
+    "percentage_error": 20.831632886538777
+  },
+  {
+    "index": 191,
+    "actual": 77.94,
+    "predicted": 100.30153718559463,
+    "percentage_error": 28.69070719219223
+  },
+  {
+    "index": 192,
+    "actual": 48.82,
+    "predicted": 45.5331095031736,
+    "percentage_error": 6.732672054130279
+  },
+  {
+    "index": 193,
+    "actual": 81.21,
+    "predicted": 67.22587166100419,
+    "percentage_error": 17.219712275576658
+  },
+  {
+    "index": 194,
+    "actual": 62.15,
+    "predicted": 194.7804585763995,
+    "percentage_error": 213.40379497409413
+  },
+  {
+    "index": 195,
+    "actual": 50.05,
+    "predicted": 44.68724475407061,
+    "percentage_error": 10.714795696162609
+  },
+  {
+    "index": 196,
+    "actual": 97.47,
+    "predicted": 122.16358638281251,
+    "percentage_error": 25.334550510734083
+  },
+  {
+    "index": 197,
+    "actual": 285.13,
+    "predicted": 191.06550528946565,
+    "percentage_error": 32.990037775938816
+  },
+  {
+    "index": 198,
+    "actual": 81.79,
+    "predicted": 157.21800914419265,
+    "percentage_error": 92.22155415600028
+  },
+  {
+    "index": 199,
+    "actual": 83.81,
+    "predicted": 86.52019337008728,
+    "percentage_error": 3.2337350794502826
+  },
+  {
+    "index": 200,
+    "actual": 138.58,
+    "predicted": 125.47392834829787,
+    "percentage_error": 9.457404857628905
+  },
+  {
+    "index": 201,
+    "actual": 42.52,
+    "predicted": 41.51021925600362,
+    "percentage_error": 2.374837121346143
+  },
+  {
+    "index": 202,
+    "actual": 277.7,
+    "predicted": 220.31780334413838,
+    "percentage_error": 20.663376541541812
+  },
+  {
+    "index": 203,
+    "actual": 85.73,
+    "predicted": 54.9405060898439,
+    "percentage_error": 35.91449190499954
+  },
+  {
+    "index": 204,
+    "actual": 45.93,
+    "predicted": 51.832652839290546,
+    "percentage_error": 12.851410492685709
+  },
+  {
+    "index": 205,
+    "actual": 45.8,
+    "predicted": 54.268522044750846,
+    "percentage_error": 18.49022280513286
+  },
+  {
+    "index": 206,
+    "actual": 45.43,
+    "predicted": 51.603174644049496,
+    "percentage_error": 13.588321910740692
+  },
+  {
+    "index": 207,
+    "actual": 21.6,
+    "predicted": 40.182119893736015,
+    "percentage_error": 86.02833284137043
+  },
+  {
+    "index": 208,
+    "actual": 347.83,
+    "predicted": 292.29152515038294,
+    "percentage_error": 15.96713188903115
+  },
+  {
+    "index": 209,
+    "actual": 22.65,
+    "predicted": 29.97947382831522,
+    "percentage_error": 32.359707851281335
+  },
+  {
+    "index": 210,
+    "actual": 271.39,
+    "predicted": 182.36503905228,
+    "percentage_error": 32.803331348878
+  },
+  {
+    "index": 211,
+    "actual": 37.3,
+    "predicted": 65.95315004609137,
+    "percentage_error": 76.81809663831467
+  },
+  {
+    "index": 212,
+    "actual": 83.4,
+    "predicted": 99.99068019318516,
+    "percentage_error": 19.892901910293944
+  },
+  {
+    "index": 213,
+    "actual": 60.43,
+    "predicted": 89.6888605062928,
+    "percentage_error": 48.41777346730564
+  },
+  {
+    "index": 214,
+    "actual": 34.88,
+    "predicted": 53.947416153565214,
+    "percentage_error": 54.66575732100117
+  },
+  {
+    "index": 215,
+    "actual": 25.59,
+    "predicted": 64.55933758398061,
+    "percentage_error": 152.2834606642462
+  },
+  {
+    "index": 216,
+    "actual": 42.56,
+    "predicted": 47.28644867422506,
+    "percentage_error": 11.10537752402505
+  },
+  {
+    "index": 217,
+    "actual": 29.25,
+    "predicted": 37.01615193031412,
+    "percentage_error": 26.550946770304694
+  },
+  {
+    "index": 218,
+    "actual": 432.88,
+    "predicted": 343.9361921506082,
+    "percentage_error": 20.546989431110656
+  },
+  {
+    "index": 219,
+    "actual": 34.61,
+    "predicted": 43.74391207738825,
+    "percentage_error": 26.39096237326857
+  },
+  {
+    "index": 220,
+    "actual": 97.82,
+    "predicted": 143.269363881772,
+    "percentage_error": 46.462240729679
+  },
+  {
+    "index": 221,
+    "actual": 103.38,
+    "predicted": 104.44437367690556,
+    "percentage_error": 1.0295740732303742
+  },
+  {
+    "index": 222,
+    "actual": 34.37,
+    "predicted": 43.34406966355064,
+    "percentage_error": 26.110182320484853
+  },
+  {
+    "index": 223,
+    "actual": 28.98,
+    "predicted": 45.23447909747554,
+    "percentage_error": 56.088609722137825
+  },
+  {
+    "index": 224,
+    "actual": 56.25,
+    "predicted": 66.84516414891507,
+    "percentage_error": 18.83584737584902
+  },
+  {
+    "index": 225,
+    "actual": 113.25,
+    "predicted": 108.66585231334795,
+    "percentage_error": 4.047812526845073
+  },
+  {
+    "index": 226,
+    "actual": 39.3,
+    "predicted": 46.761888401597965,
+    "percentage_error": 18.986993388289992
+  },
+  {
+    "index": 227,
+    "actual": 45.29,
+    "predicted": 78.56884154193638,
+    "percentage_error": 73.47944699036516
+  },
+  {
+    "index": 228,
+    "actual": 185.6,
+    "predicted": 163.24419013810757,
+    "percentage_error": 12.045156175588591
+  },
+  {
+    "index": 229,
+    "actual": 54.45,
+    "predicted": 61.57950462598723,
+    "percentage_error": 13.093672407690033
+  },
+  {
+    "index": 230,
+    "actual": 126.56,
+    "predicted": 176.27442125140573,
+    "percentage_error": 39.281306298519056
+  },
+  {
+    "index": 231,
+    "actual": 209.2,
+    "predicted": 206.42744336547798,
+    "percentage_error": 1.3253138788346104
+  },
+  {
+    "index": 232,
+    "actual": 28.34,
+    "predicted": 35.992114312094486,
+    "percentage_error": 27.001109075845047
+  },
+  {
+    "index": 233,
+    "actual": 27.75,
+    "predicted": 42.94769990690406,
+    "percentage_error": 54.76648615100564
+  },
+  {
+    "index": 234,
+    "actual": 33.02,
+    "predicted": 44.74636449027689,
+    "percentage_error": 35.51291487061443
+  },
+  {
+    "index": 235,
+    "actual": 27.65,
+    "predicted": 188.89748137701991,
+    "percentage_error": 583.1735312007954
+  },
+  {
+    "index": 236,
+    "actual": 94.04,
+    "predicted": 62.91301861743504,
+    "percentage_error": 33.09972499209375
+  },
+  {
+    "index": 237,
+    "actual": 175.83,
+    "predicted": 148.72314116270104,
+    "percentage_error": 15.416515291644753
+  },
+  {
+    "index": 238,
+    "actual": 31.12,
+    "predicted": 37.76376928882709,
+    "percentage_error": 21.34887303607677
+  },
+  {
+    "index": 239,
+    "actual": 89.41,
+    "predicted": 111.93900216361848,
+    "percentage_error": 25.1974076318292
+  },
+  {
+    "index": 240,
+    "actual": 365.37,
+    "predicted": 200.5007707233355,
+    "percentage_error": 45.12390981105852
+  },
+  {
+    "index": 241,
+    "actual": 151.6,
+    "predicted": 148.4680656534593,
+    "percentage_error": 2.0659197536548173
+  },
+  {
+    "index": 242,
+    "actual": 46.5,
+    "predicted": 57.73441260889037,
+    "percentage_error": 24.160027115893275
+  },
+  {
+    "index": 243,
+    "actual": 97.62,
+    "predicted": 95.72309739569398,
+    "percentage_error": 1.9431495639274952
+  },
+  {
+    "index": 244,
+    "actual": 35.44,
+    "predicted": 42.09142330007189,
+    "percentage_error": 18.768124435868767
+  },
+  {
+    "index": 245,
+    "actual": 52.93,
+    "predicted": 112.7157419224567,
+    "percentage_error": 112.95246915257265
+  },
+  {
+    "index": 246,
+    "actual": 253.02,
+    "predicted": 260.2511199109329,
+    "percentage_error": 2.857924239559285
+  },
+  {
+    "index": 247,
+    "actual": 74.82,
+    "predicted": 99.05092064670542,
+    "percentage_error": 32.38561968284607
+  },
+  {
+    "index": 248,
+    "actual": 186.34,
+    "predicted": 177.82454329313236,
+    "percentage_error": 4.569849043075903
+  },
+  {
+    "index": 249,
+    "actual": 99.27,
+    "predicted": 102.4387754038641,
+    "percentage_error": 3.1920775701260236
+  },
+  {
+    "index": 250,
+    "actual": 77.27,
+    "predicted": 84.44263877705849,
+    "percentage_error": 9.282566037347607
+  },
+  {
+    "index": 251,
+    "actual": 34.86,
+    "predicted": 60.957370969095315,
+    "percentage_error": 74.86337053670486
+  },
+  {
+    "index": 252,
+    "actual": 141.64,
+    "predicted": 142.67677537166463,
+    "percentage_error": 0.7319792231464602
+  },
+  {
+    "index": 253,
+    "actual": 51.66,
+    "predicted": 60.23205780232775,
+    "percentage_error": 16.593220678141225
+  },
+  {
+    "index": 254,
+    "actual": 102.07,
+    "predicted": 78.29226569630111,
+    "percentage_error": 23.29551709973438
+  },
+  {
+    "index": 255,
+    "actual": 127.97,
+    "predicted": 151.55453722907987,
+    "percentage_error": 18.42973918033904
+  },
+  {
+    "index": 256,
+    "actual": 93.02,
+    "predicted": 92.5004071942329,
+    "percentage_error": 0.5585818165632013
+  },
+  {
+    "index": 257,
+    "actual": 29.96,
+    "predicted": 37.53351851262491,
+    "percentage_error": 25.278766731057768
+  },
+  {
+    "index": 258,
+    "actual": 72.06,
+    "predicted": 90.20921614519571,
+    "percentage_error": 25.186256099355685
+  },
+  {
+    "index": 259,
+    "actual": 136.81,
+    "predicted": 178.65387109942696,
+    "percentage_error": 30.585389298608995
+  },
+  {
+    "index": 260,
+    "actual": 55.56,
+    "predicted": 56.057073423268434,
+    "percentage_error": 0.894660589036055
+  },
+  {
+    "index": 261,
+    "actual": 92.46,
+    "predicted": 191.04746791403255,
+    "percentage_error": 106.62715543373629
+  },
+  {
+    "index": 262,
+    "actual": 41.84,
+    "predicted": 51.21989173027287,
+    "percentage_error": 22.418479278854843
+  },
+  {
+    "index": 263,
+    "actual": 73.41,
+    "predicted": 84.77555951699652,
+    "percentage_error": 15.482304205144432
+  },
+  {
+    "index": 264,
+    "actual": 54.56,
+    "predicted": 50.52347286948054,
+    "percentage_error": 7.398326852125109
+  },
+  {
+    "index": 265,
+    "actual": 95.0,
+    "predicted": 104.04147682465302,
+    "percentage_error": 9.517344025950544
+  },
+  {
+    "index": 266,
+    "actual": 90.99,
+    "predicted": 101.92987294381757,
+    "percentage_error": 12.023159626132077
+  },
+  {
+    "index": 267,
+    "actual": 43.28,
+    "predicted": 40.765860230400904,
+    "percentage_error": 5.809010558223423
+  },
+  {
+    "index": 268,
+    "actual": 31.84,
+    "predicted": 110.86974590717656,
+    "percentage_error": 248.2090009647505
+  },
+  {
+    "index": 269,
+    "actual": 43.49,
+    "predicted": 73.06199902164998,
+    "percentage_error": 67.99723849540119
+  },
+  {
+    "index": 270,
+    "actual": 103.57,
+    "predicted": 114.75988379366194,
+    "percentage_error": 10.804174754911605
+  },
+  {
+    "index": 271,
+    "actual": 162.29,
+    "predicted": 95.17190196525206,
+    "percentage_error": 41.35689077253554
+  },
+  {
+    "index": 272,
+    "actual": 38.45,
+    "predicted": 53.83113172144849,
+    "percentage_error": 40.0029433587737
+  },
+  {
+    "index": 273,
+    "actual": 186.97,
+    "predicted": 132.19785459923844,
+    "percentage_error": 29.294616997786576
+  },
+  {
+    "index": 274,
+    "actual": 133.35,
+    "predicted": 98.78893346932692,
+    "percentage_error": 25.917560202979434
+  },
+  {
+    "index": 275,
+    "actual": 82.12,
+    "predicted": 154.88436544781297,
+    "percentage_error": 88.60736172407813
+  },
+  {
+    "index": 276,
+    "actual": 106.1,
+    "predicted": 120.68186547757121,
+    "percentage_error": 13.743511288945538
+  },
+  {
+    "index": 277,
+    "actual": 128.71,
+    "predicted": 139.0138561276728,
+    "percentage_error": 8.005482190717728
+  },
+  {
+    "index": 278,
+    "actual": 30.89,
+    "predicted": 35.4446250804493,
+    "percentage_error": 14.744658725960825
+  },
+  {
+    "index": 279,
+    "actual": 128.93,
+    "predicted": 98.25841872778655,
+    "percentage_error": 23.789328528824523
+  },
+  {
+    "index": 280,
+    "actual": 36.64,
+    "predicted": 45.053183742726496,
+    "percentage_error": 22.96174602272515
+  },
+  {
+    "index": 281,
+    "actual": 96.36,
+    "predicted": 118.43407305491606,
+    "percentage_error": 22.907921393644724
+  },
+  {
+    "index": 282,
+    "actual": 16.52,
+    "predicted": 32.576917391734554,
+    "percentage_error": 97.19683651171039
+  },
+  {
+    "index": 283,
+    "actual": 91.48,
+    "predicted": 129.33134017510162,
+    "percentage_error": 41.37662896272585
+  },
+  {
+    "index": 284,
+    "actual": 135.6,
+    "predicted": 123.1788082878749,
+    "percentage_error": 9.1601708791483
+  },
+  {
+    "index": 285,
+    "actual": 60.63,
+    "predicted": 81.83149660575472,
+    "percentage_error": 34.96865678006716
+  },
+  {
+    "index": 286,
+    "actual": 120.36,
+    "predicted": 125.49895005522315,
+    "percentage_error": 4.269649431059445
+  },
+  {
+    "index": 287,
+    "actual": 89.17,
+    "predicted": 113.94174370285006,
+    "percentage_error": 27.78035628894254
+  },
+  {
+    "index": 288,
+    "actual": 73.68,
+    "predicted": 51.609924846214625,
+    "percentage_error": 29.953956506223374
+  },
+  {
+    "index": 289,
+    "actual": 61.51,
+    "predicted": 74.97493300148508,
+    "percentage_error": 21.890640548667022
+  },
+  {
+    "index": 290,
+    "actual": 36.46,
+    "predicted": 47.68433304004074,
+    "percentage_error": 30.78533472309583
+  },
+  {
+    "index": 291,
+    "actual": 71.78,
+    "predicted": 85.73425331617231,
+    "percentage_error": 19.4403083256789
+  }
+]

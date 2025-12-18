@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirAware – Smart Air Quality Monitoring Dashboard</title>
+    <style>
+        :root {
+            font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            font-weight: 400;
+            color: #213547;
+            background-color: #f5f5f5;
+            --primary-color: #4F46E5;
+            --secondary-color: #0EA5E9;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --info-color: #3B82F6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        /* App Styles */
+        .App {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .header-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            margin: 0.5rem 0 0 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .refresh-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        .refresh-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .refresh-button.small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .refresh-icon {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: white;
+        }
+
+        .profile-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .profile-menu.show {
+            display: block;
+        }
+
+        .profile-menu-item {
+            padding: 0.75rem 1rem;
+            color: #333;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-menu-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .profile-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Sidebar Styles */
+        .sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-toggle-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            height: calc(100vh - 4rem);
+            position: fixed;
+            top: 4rem;
+            left: 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            z-index: 90;
+            overflow-y: auto;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-content {
+            padding: 1rem;
+        }
+
+        .sidebar-nav {
+            margin-top: 1rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 0.25rem;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-menu-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        .sidebar-menu-item.active {
+            background-color: #e0e7ff;
+            color: var(--primary-color);
+        }
+
+        .sidebar-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.75rem;
+        }
+
+        .sidebar-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .dashboard-content {
+            display: flex;
+            min-height: calc(100vh - 4rem);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 0;
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.with-sidebar {
+            margin-left: 250px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .dashboard-title {
+            margin: 0;
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .dashboard-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .refresh-all-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        .refresh-all-button:hover {
+            background-color: #4338ca;
+        }
+
+        /* Filters Styles */
+        .filters-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-button {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .filter-button:hover {
+            background-color: #cbd5e0;
+        }
+
+        .filter-button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .filter-button.custom-range {
+            background-color: #f1f5f9;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid #cbd5e0;
+            background-color: white;
+            font-family: inherit;
+            font-size: 0.875rem;
+        }
+
+        /* Tabs Styles */
+        .tabs-container {
+            margin-bottom: 2rem;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            color: #718096;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-button:hover {
+            color: #4a5568;
+            background-color: #f7fafc;
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-icon-svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .tab-content {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-section:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            margin: 0;
+            color: #333;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Air Quality Status */
+        .air-quality-status {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e5e9;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .air-quality-status:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .air-quality-status h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+        }
+
+        .air-quality-status p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .air-quality-status.good {
+            border-left: 5px solid var(--success-color);
+        }
+
+        .air-quality-status.moderate {
+            border-left: 5px solid var(--warning-color);
+        }
+
+        .air-quality-status.unhealthy-sensitive {
+            border-left: 5px solid #fb923c;
+        }
+
+        .air-quality-status.unhealthy {
+            border-left: 5px solid var(--danger-color);
+        }
+
+        .air-quality-status.very-unhealthy {
+            border-left: 5px solid #c084fc;
+        }
+
+        .air-quality-status.hazardous {
+            border-left: 5px solid #dc2626;
+        }
+
+        /* Summary Cards */
+        .summary-cards h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e5e9;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-card.selected {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .summary-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: #4a5568;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .summary-card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            color: #2d3748;
+        }
+
+        .summary-card .range {
+            font-size: 0.9rem;
+            color: #718096;
+            margin: 0.5rem 0;
+        }
+
+        .summary-card .date-range {
+            font-size: 0.9rem;
+            color: #718096;
+            margin: 0.5rem 0 0 0;
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Pollutant Selector */
+        .pollutant-selector {
+            margin-bottom: 1.5rem;
+        }
+
+        .selector-title {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .pollutant-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .pollutant-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e5e9;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pollutant-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .pollutant-card.selected {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .pollutant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .pollutant-name {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .pollutant-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        .pollutant-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            color: #2d3748;
+        }
+
+        .pollutant-unit {
+            font-size: 1rem;
+            color: #718096;
+        }
+
+        .pollutant-progress {
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .pollutant-progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            margin-bottom: 2rem;
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-title {
+            margin: 0;
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chart-refresh {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .chart-refresh:hover {
+            background-color: #f1f5f9;
+        }
+
+        .line-chart, .bar-chart, .multi-chart {
+            height: 300px;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            height: 100%;
+        }
+
+        .y-axis {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-right: 0.5rem;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .y-axis.left {
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .y-axis.right {
+            border-left: 1px solid #e2e8f0;
+            align-items: flex-start;
+            padding: 0 0 0 0.5rem;
+        }
+
+        .y-label {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .chart-area {
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .grid-line {
+            stroke: #e2e8f0;
+            stroke-width: 1;
+        }
+
+        .data-point {
+            transition: r 0.2s;
+        }
+
+        .data-point:hover {
+            r: 5;
+        }
+
+        .bar {
+            transition: opacity 0.2s;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+        }
+
+        .bar.exceeding {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .bar-label {
+            font-size: 0.75rem;
+            fill: #718096;
+        }
+
+        .bar-value {
+            font-size: 0.75rem;
+            fill: #4a5568;
+            font-weight: 600;
+        }
+
+        .bar-warning {
+            font-size: 1rem;
+            fill: #dc2626;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .legend-text {
+            font-size: 0.75rem;
+            fill: #4a5568;
+        }
+
+        .x-axis {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 1rem 0 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .x-label {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .chart-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .chart-stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.875rem;
+            color: #718096;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+
+        .legend-label {
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .legend-threshold {
+            color: #718096;
+        }
+
+        /* Heatmap Styles */
+        .heatmap-section {
+            margin-bottom: 2rem;
+        }
+
+        .heatmap-container {
+            display: grid;
+            grid-template-columns: 100px repeat(7, 1fr);
+            gap: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .heatmap-header-cell {
+            background-color: #f1f5f9;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: #4a5568;
+        }
+
+        .heatmap-label-cell {
+            background-color: #f1f5f9;
+            padding: 0.5rem;
+            text-align: right;
+            font-weight: 500;
+            font-size: 0.75rem;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .heatmap-cell {
+            background-color: #e2e8f0;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .heatmap-cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .heatmap-value {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: white;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+        }
+
+        .bg-green-500 {
+            background-color: var(--success-color);
+        }
+
+        .bg-yellow-500 {
+            background-color: var(--warning-color);
+        }
+
+        .bg-orange-500 {
+            background-color: #fb923c;
+        }
+
+        .bg-red-500 {
+            background-color: var(--danger-color);
+        }
+
+        .bg-purple-500 {
+            background-color: #c084fc;
+        }
+
+        .bg-red-800 {
+            background-color: #991b1b;
+        }
+
+        .heatmap-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+        }
+
+        /* Alerts Styles */
+        .alerts-section {
+            margin-bottom: 2rem;
+        }
+
+        .alert-card {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #cbd5e1;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .alert-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .alert-danger {
+            border-left-color: var(--danger-color);
+            background-color: #fef2f2;
+        }
+
+        .alert-warning {
+            border-left-color: var(--warning-color);
+            background-color: #fffbeb;
+        }
+
+        .alert-caution {
+            border-left-color: #f59e0b;
+            background-color: #fffbeb;
+        }
+
+        .alert-info {
+            border-left-color: var(--info-color);
+            background-color: #eff6ff;
+        }
+
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-type {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .alert-level {
+            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .alert-danger .alert-level {
+            background-color: #fecaca;
+            color: #991b1b;
+        }
+
+        .alert-warning .alert-level {
+            background-color: #fde68a;
+            color: #92400e;
+        }
+
+        .alert-message {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .alert-recommendation {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: #4a5568;
+        }
+
+        .alert-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .no-alerts {
+            text-align: center;
+            padding: 2rem;
+            color: #718096;
+        }
+
+        .no-alerts-icon {
+            width: 3rem;
+            height: 3rem;
+            margin: 0 auto 1rem;
+            color: var(--success-color);
+        }
+
+        .no-alerts h3 {
+            margin: 0 0 0.5rem 0;
+            color: #4a5568;
+        }
+
+        .no-alerts p {
+            margin: 0;
+        }
+
+        /* Recent Data Table */
+        .recent-data-table h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid #cbd5e0;
+            background-color: white;
+            font-family: inherit;
+            font-size: 0.875rem;
+            min-width: 200px;
+        }
+
+        .table-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .refresh-button-table {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .refresh-button-table:hover {
+            background-color: #4338ca;
+        }
+
+        .record-count {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid #e1e5e9;
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .data-table thead {
+            background-color: #f7fafc;
+        }
+
+        .data-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        .data-table th.sortable:hover {
+            background-color: #edf2f7;
+        }
+
+        .data-table th .unit {
+            font-size: 0.8rem;
+            color: #718096;
+            font-weight: normal;
+            margin-top: 0.2rem;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #f7fafc;
+        }
+
+        .data-table .value {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Air Quality Status Colors */
+        .good .status-indicator,
+        .good .progress-fill {
+            background-color: var(--success-color);
+        }
+
+        .moderate .status-indicator,
+        .moderate .progress-fill {
+            background-color: var(--warning-color);
+        }
+
+        .unhealthy-sensitive .status-indicator,
+        .unhealthy-sensitive .progress-fill {
+            background-color: #fb923c;
+        }
+
+        .unhealthy .status-indicator,
+        .unhealthy .progress-fill {
+            background-color: var(--danger-color);
+        }
+
+        .very-unhealthy .status-indicator,
+        .very-unhealthy .progress-fill {
+            background-color: #c084fc;
+        }
+
+        .hazardous .status-indicator,
+        .hazardous .progress-fill {
+            background-color: #dc2626;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+        }
+
+        .pagination-button {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.2s;
+        }
+
+        .pagination-button:hover:not(:disabled) {
+            background-color: #cbd5e0;
+        }
+
+        .pagination-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination-info {
+            font-size: 0.875rem;
+            color: #718096;
+        }
+
+        /* Placeholder Cards */
+        .placeholder-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e5e9;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .placeholder-card h3 {
+            margin: 0 0 1rem 0;
+            color: #4a5568;
+        }
+
+        .placeholder-card p {
+            color: #718096;
+            margin: 0 0 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        .coming-soon {
+            background-color: #e0e7ff;
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        /* Loading and Error States */
+        .loading, .error {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading {
+            color: #4a5568;
+        }
+
+        .error {
+            color: var(--danger-color);
+            background-color: #fed7d7;
+        }
+
+        .cards-loading, .table-loading, .alerts-loading {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skeleton-card, .skeleton-table, .skeleton-alert, .skeleton-chart {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 12px;
+            height: 150px;
+        }
+
+        .skeleton-table {
+            height: 300px;
+        }
+
+        .skeleton-alert {
+            height: 100px;
+        }
+
+        .skeleton-chart {
+            height: 250px;
+        }
+
+        .skeleton-text {
+            height: 20px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .chart-loading, .table-loading, .alerts-loading, .cards-loading {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .global-loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .retry-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .retry-button:hover {
+            background-color: #4338ca;
+        }
+
+        .chart-error, .table-error, .alerts-error, .cards-error {
+            text-align: center;
+            padding: 2rem;
+            color: var(--danger-color);
+        }
+
+        .chart-empty {
+            text-align: center;
+            padding: 2rem;
+            color: #718096;
+        }
+
+        /* Footer */
+        .dashboard-footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer-content {
+            text-align: center;
+            color: #718096;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .heatmap-container {
+                grid-template-columns: 80px repeat(5, 1fr);
+            }
+            
+            .filters-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .summary-card {
+                padding: 1rem;
+            }
+            
+            .summary-card .value {
+                font-size: 1.5rem;
+            }
+            
+            .data-table {
+                font-size: 0.8rem;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 0.5rem;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .table-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .air-quality-status h3 {
+                font-size: 1.2rem;
+            }
+            
+            .sidebar {
+                width: 200px;
+            }
+            
+            .heatmap-container {
+                grid-template-columns: 60px repeat(3, 1fr);
+            }
+            
+            .heatmap-header-cell,
+            .heatmap-label-cell {
+                font-size: 0.6rem;
+            }
+            
+            .heatmap-value {
+                font-size: 0.6rem;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .dashboard-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .filters-container {
+                width: 100%;
+            }
+            
+            .filter-options {
+                flex-wrap: wrap;
+            }
+            
+            .pollutant-cards {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .header-title {
+                font-size: 1.2rem;
+            }
+            
+            .header-subtitle {
+                font-size: 0.875rem;
+            }
+            
+            .dashboard-section {
+                padding: 1rem;
+            }
+            
+            .chart-container {
+                padding: 1rem;
+            }
+            
+            .charts-row {
+                gap: 1rem;
+            }
+            
+            .heatmap-container {
+                grid-template-columns: 50px repeat(2, 1fr);
+            }
+            
+            .heatmap-legend {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .search-input {
+                min-width: 150px;
+            }
+            
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .tab-icon-svg {
+                width: 1rem;
+                height: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="App">
+        <div class="dashboard-layout">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-content">
+                    <div class="header-left">
+                        <h1 class="header-title">AirAware – Smart Air Quality Monitoring Dashboard</h1>
+                        <p class="header-subtitle">Delhi, India – Air Quality Analytics</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="refresh-button" id="refreshButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="refresh-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Refresh
+                        </button>
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div class="profile-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="profile-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                            <div class="profile-menu" id="profileMenu">
+                                <div class="profile-menu-item">Profile</div>
+                                <div class="profile-menu-item">Settings</div>
+                                <div class="profile-menu-item">Logout</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Sidebar Toggle -->
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-toggle-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
+                <!-- Sidebar -->
+                <aside class="sidebar open" id="sidebar">
+                    <div class="sidebar-content">
+                        <nav class="sidebar-nav">
+                            <ul class="sidebar-menu">
+                                <li class="sidebar-menu-item active" data-tab="overview">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                    </svg>
+                                    <span class="sidebar-text">Overview</span>
+                                </li>
+                                <li class="sidebar-menu-item" data-tab="trends">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <span class="sidebar-text">Pollutant Trends</span>
+                                </li>
+                                <li class="sidebar-menu-item" data-tab="weather">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4 4 0 003 15z" />
+                                    </svg>
+                                    <span class="sidebar-text">Weather</span>
+                                </li>
+                                <li class="sidebar-menu-item" data-tab="predictions">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
+                                    <span class="sidebar-text">Predictions</span>
+                                </li>
+                                <li class="sidebar-menu-item" data-tab="alerts">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                    </svg>
+                                    <span class="sidebar-text">Alerts</span>
+                                </li>
+                                <li class="sidebar-menu-item" data-tab="heatmap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                                    </svg>
+                                    <span class="sidebar-text">Accuracy Heatmap</span>
+                                </li>
+                                <li class="sidebar-menu-item" data-tab="data">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                    </svg>
+                                    <span class="sidebar-text">Recent Data</span>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="main-content with-sidebar">
+                    <div class="dashboard-header">
+                        <h1 class="dashboard-title">AirAware Dashboard</h1>
+                        <div class="dashboard-controls">
+                            <div class="filters-container">
+                                <div class="filter-group">
+                                    <label class="filter-label">Date Range</label>
+                                    <div class="filter-options">
+                                        <button class="filter-button active" data-range="30">Last 30 Days</button>
+                                        <button class="filter-button" data-range="7">Last 7 Days</button>
+                                        <button class="filter-button" data-range="90">Last 90 Days</button>
+                                        <button class="filter-button custom-range">Custom Range</button>
+                                    </div>
+                                </div>
+
+                                <div class="filter-group">
+                                    <label class="filter-label">Pollutant</label>
+                                    <select class="filter-select" id="pollutantFilter">
+                                        <option value="pm25">PM2.5</option>
+                                        <option value="pm10">PM10</option>
+                                        <option value="co2">CO2</option>
+                                        <option value="no2">NO2</option>
+                                        <option value="so2">SO2</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter-group">
+                                    <label class="filter-label">City</label>
+                                    <select class="filter-select" id="cityFilter">
+                                        <option value="delhi">Delhi</option>
+                                        <option value="mumbai">Mumbai</option>
+                                        <option value="bangalore">Bangalore</option>
+                                        <option value="chennai">Chennai</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="refresh-all-button" id="refreshAllButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="refresh-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                Refresh All
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="tabs-container">
+                        <div class="tabs-header">
+                            <button class="tab-button active" data-tab="overview">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tab-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                </svg>
+                                <span class="tab-label">Overview</span>
+                            </button>
+                            <button class="tab-button" data-tab="trends">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tab-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="tab-label">Pollutant Trends</span>
+                            </button>
+                            <button class="tab-button" data-tab="weather">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tab-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4 4 0 003 15z" />
+                                </svg>
+                                <span class="tab-label">Weather</span>
+                            </button>
+                            <button class="tab-button" data-tab="predictions">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tab-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                                <span class="tab-label">Predictions</span>
+                            </button>
+                            <button class="tab-button" data-tab="alerts">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tab-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
+                                <span class="tab-label">Alerts</span>
+                            </button>
+                            <button class="tab-button" data-tab="heatmap">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tab-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                                </svg>
+                                <span class="tab-label">Accuracy Heatmap</span>
+                            </button>
+                            <button class="tab-button" data-tab="data">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tab-icon-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                                <span class="tab-label">Recent Data</span>
+                            </button>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div class="tab-content">
+                            <!-- Overview Tab -->
+                            <div class="dashboard-grid" id="overview-content">
+                                <!-- Summary Cards Section -->
+                                <section class="dashboard-section">
+                                    <div class="summary-cards">
+                                        <h2>Air Quality Summary</h2>
+                                        <div class="air-quality-status good">
+                                            <h3>Air Quality: Good</h3>
+                                            <p>Average PM2.5: 45.2 μg/m³</p>
+                                        </div>
+                                        <div class="cards-grid">
+                                            <div class="summary-card selected" data-pollutant="pm25">
+                                                <h3>PM2.5</h3>
+                                                <p class="value">45.2 μg/m³</p>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 30%; background-color: #10B981;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="summary-card" data-pollutant="pm10">
+                                                <h3>PM10</h3>
+                                                <p class="value">89.7 μg/m³</p>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill" style="width: 45%; background-color: #F59E0B;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="summary-card" data-pollutant="co2">
+                                                <h3>CO2</h3>
+                                                <p class="value">1.2 ppm</p>
+                                            </div>
+                                            <div class="summary-card" data-pollutant="no2">
+                                                <h3>NO2</h3>
+                                                <p class="value">32.4 μg/m³</p>
+                                            </div>
+                                            <div class="summary-card" data-pollutant="so2">
+                                                <h3>SO2</h3>
+                                                <p class="value">18.7 μg/m³</p>
+                                            </div>
+                                            <div class="summary-card">
+                                                <h3>Temperature</h3>
+                                                <p class="value">26.3°C</p>
+                                            </div>
+                                            <div class="summary-card">
+                                                <h3>Humidity</h3>
+                                                <p class="value">48.2%</p>
+                                            </div>
+                                            <div class="summary-card">
+                                                <h3>Total Records</h3>
+                                                <p class="value">1,461</p>
+                                                <p class="date-range">Jan 1, 2021 to Dec 31, 2021</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!-- Pollutant Selector -->
+                                <section class="dashboard-section">
+                                    <div class="pollutant-selector">
+                                        <h3 class="selector-title">Select Pollutant</h3>
+                                        <div class="pollutant-cards">
+                                            <div class="pollutant-card selected" data-pollutant="pm25">
+                                                <div class="pollutant-header">
+                                                    <h4 class="pollutant-name">PM2.5</h4>
+                                                    <div class="pollutant-status" style="background-color: #4F46E5;">Good</div>
+                                                </div>
+                                                <div class="pollutant-value">45.2 <span class="pollutant-unit">μg/m³</span></div>
+                                                <div class="pollutant-progress">
+                                                    <div class="pollutant-progress-fill" style="width: 15%; background-color: #4F46E5;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="pollutant-card" data-pollutant="pm10">
+                                                <div class="pollutant-header">
+                                                    <h4 class="pollutant-name">PM10</h4>
+                                                    <div class="pollutant-status" style="background-color: #0EA5E9;">Moderate</div>
+                                                </div>
+                                                <div class="pollutant-value">89.7 <span class="pollutant-unit">μg/m³</span></div>
+                                                <div class="pollutant-progress">
+                                                    <div class="pollutant-progress-fill" style="width: 22%; background-color: #0EA5E9;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="pollutant-card" data-pollutant="co2">
+                                                <div class="pollutant-header">
+                                                    <h4 class="pollutant-name">CO2</h4>
+                                                    <div class="pollutant-status" style="background-color: #8B5CF6;">Good</div>
+                                                </div>
+                                                <div class="pollutant-value">1.2 <span class="pollutant-unit">ppm</span></div>
+                                                <div class="pollutant-progress">
+                                                    <div class="pollutant-progress-fill" style="width: 0.1%; background-color: #8B5CF6;"></div>
+                                                </div>
+                                            </div>
+                                            <div class="pollutant-card" data-pollutant="no2">
+                                                <div class="pollutant-header">
+                                                    <h4 class="pollutant-name">NO2</h4>
+                                                    <div class="pollutant-status" style="background-color: #EC4899;">Good</div>
+                                                </div>

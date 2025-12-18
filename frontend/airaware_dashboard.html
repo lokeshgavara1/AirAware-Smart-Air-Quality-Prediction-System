@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirAware – Smart Air Quality Monitoring Dashboard</title>
+    <style>
+        :root {
+            font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            font-weight: 400;
+            color: #213547;
+            background-color: #f5f5f5;
+            --primary-color: #4F46E5;
+            --secondary-color: #0EA5E9;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --info-color: #3B82F6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .header-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header-subtitle {
+            margin: 0.5rem 0 0 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .refresh-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        .refresh-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .refresh-button.small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .refresh-icon {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: white;
+        }
+
+        .profile-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .profile-menu.show {
+            display: block;
+        }
+
+        .profile-menu-item {
+            padding: 0.75rem 1rem;
+            color: #333;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-menu-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .profile-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Sidebar Styles */
+        .sidebar-toggle {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-toggle-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            height: calc(100vh - 4rem);
+            position: fixed;
+            top: 4rem;
+            left: 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            z-index: 90;
+            overflow-y: auto;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-content {
+            padding: 1rem;
+        }
+
+        .sidebar-nav {
+            margin-top: 1rem;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 0.25rem;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-menu-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        .sidebar-menu-item.active {
+            background-color: #e0e7ff;
+            color: var(--primary-color);
+        }
+
+        .sidebar-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.75rem;
+        }
+
+        .sidebar-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .dashboard-content {
+            display: flex;
+            min-height: calc(100vh - 4rem);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 0;
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.with-sidebar {
+            margin-left: 250px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-section:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            margin: 0;
+            color: #333;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Air Quality Status */
+        .air-quality-status {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e5e9;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .air-quality-status:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .air-quality-status h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+        }
+
+        .air-quality-status p {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .air-quality-status.good {
+            border-left: 5px solid var(--success-color);
+        }
+
+        .air-quality-status.moderate {
+            border-left: 5px solid var(--warning-color);
+        }
+
+        .air-quality-status.unhealthy-sensitive {
+            border-left: 5px solid #fb923c;
+        }
+
+        .air-quality-status.unhealthy {
+            border-left: 5px solid var(--danger-color);
+        }
+
+        .air-quality-status.very-unhealthy {
+            border-left: 5px solid #c084fc;
+        }
+
+        .air-quality-status.hazardous {
+            border-left: 5px solid #dc2626;
+        }
+
+        /* Summary Cards */
+        .summary-cards h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e5e9;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: #4a5568;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .summary-card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            color: #2d3748;
+        }
+
+        .summary-card .range {
+            font-size: 0.9rem;
+            color: #718096;
+            margin: 0.5rem 0;
+        }
+
+        .summary-card .date-range {
+            font-size: 0.9rem;
+            color: #718096;
+            margin: 0.5rem 0 0 0;
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Recent Data Table */
+        .recent-data-table h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .table-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .refresh-button-table {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .refresh-button-table:hover {
+            background-color: #4338ca;
+        }
+
+        .record-count {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid #e1e5e9;
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .data-table thead {
+            background-color: #f7fafc;
+        }
+
+        .data-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        .data-table th.sortable:hover {
+            background-color: #edf2f7;
+        }
+
+        .data-table th .unit {
+            font-size: 0.8rem;
+            color: #718096;
+            font-weight: normal;
+            margin-top: 0.2rem;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #f7fafc;
+        }
+
+        .data-table .value {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Air Quality Status Colors */
+        .good .status-indicator,
+        .good .progress-fill {
+            background-color: var(--success-color);
+        }
+
+        .moderate .status-indicator,
+        .moderate .progress-fill {
+            background-color: var(--warning-color);
+        }
+
+        .unhealthy-sensitive .status-indicator,
+        .unhealthy-sensitive .progress-fill {
+            background-color: #fb923c;
+        }
+
+        .unhealthy .status-indicator,
+        .unhealthy .progress-fill {
+            background-color: var(--danger-color);
+        }
+
+        .very-unhealthy .status-indicator,
+        .very-unhealthy .progress-fill {
+            background-color: #c084fc;
+        }
+
+        .hazardous .status-indicator,
+        .hazardous .progress-fill {
+            background-color: #dc2626;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            margin-bottom: 2rem;
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .chart-title {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .line-chart, .bar-chart, .multi-chart {
+            height: 250px;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            height: 100%;
+        }
+
+        .y-axis {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-right: 0.5rem;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .y-axis.left {
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .y-axis.right {
+            border-left: 1px solid #e2e8f0;
+            align-items: flex-start;
+            padding: 0 0 0 0.5rem;
+        }
+
+        .y-label {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .chart-area {
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .grid-line {
+            stroke: #e2e8f0;
+            stroke-width: 1;
+        }
+
+        .data-point {
+            transition: r 0.2s;
+        }
+
+        .data-point:hover {
+            r: 5;
+        }
+
+        .bar {
+            transition: opacity 0.2s;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+        }
+
+        .bar-label {
+            font-size: 0.75rem;
+            fill: #718096;
+        }
+
+        .legend-text {
+            font-size: 0.75rem;
+            fill: #4a5568;
+        }
+
+        .x-axis {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 1rem 0 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .x-label {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .chart-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #718096;
+            font-style: italic;
+        }
+
+        /* Heatmap Styles */
+        .heatmap-section {
+            margin-bottom: 2rem;
+        }
+
+        .heatmap-container {
+            display: grid;
+            grid-template-columns: 100px repeat(7, 1fr);
+            gap: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .heatmap-header-cell {
+            background-color: #f1f5f9;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: #4a5568;
+        }
+
+        .heatmap-label-cell {
+            background-color: #f1f5f9;
+            padding: 0.5rem;
+            text-align: right;
+            font-weight: 500;
+            font-size: 0.75rem;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .heatmap-cell {
+            background-color: #e2e8f0;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .heatmap-cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .heatmap-value {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: white;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+        }
+
+        .bg-green-500 {
+            background-color: var(--success-color);
+        }
+
+        .bg-yellow-500 {
+            background-color: var(--warning-color);
+        }
+
+        .bg-orange-500 {
+            background-color: #fb923c;
+        }
+
+        .bg-red-500 {
+            background-color: var(--danger-color);
+        }
+
+        .bg-purple-500 {
+            background-color: #c084fc;
+        }
+
+        .bg-red-800 {
+            background-color: #991b1b;
+        }
+
+        .heatmap-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        /* Alerts Styles */
+        .alerts-section {
+            margin-bottom: 2rem;
+        }
+
+        .alert-card {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #cbd5e1;
+        }
+
+        .alert-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .alert-danger {
+            border-left-color: var(--danger-color);
+            background-color: #fef2f2;
+        }
+
+        .alert-warning {
+            border-left-color: var(--warning-color);
+            background-color: #fffbeb;
+        }
+
+        .alert-caution {
+            border-left-color: #f59e0b;
+            background-color: #fffbeb;
+        }
+
+        .alert-info {
+            border-left-color: var(--info-color);
+            background-color: #eff6ff;
+        }
+
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-type {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .alert-level {
+            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .alert-danger .alert-level {
+            background-color: #fecaca;
+            color: #991b1b;
+        }
+
+        .alert-warning .alert-level {
+            background-color: #fde68a;
+            color: #92400e;
+        }
+
+        .alert-message {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .alert-recommendation {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: #4a5568;
+        }
+
+        .alert-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .no-alerts {
+            text-align: center;
+            padding: 2rem;
+            color: #718096;
+        }
+
+        .no-alerts-icon {
+            width: 3rem;
+            height: 3rem;
+            margin: 0 auto 1rem;
+            color: var(--success-color);
+        }
+
+        .no-alerts h3 {
+            margin: 0 0 0.5rem 0;
+            color: #4a5568;
+        }
+
+        .no-alerts p {
+            margin: 0;
+        }
+
+        /* Loading and Error States */
+        .loading, .error {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading {
+            color: #4a5568;
+        }
+
+        .error {
+            color: var(--danger-color);
+            background-color: #fed7d7;
+        }
+
+        /* Footer */
+        .dashboard-footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer-content {
+            text-align: center;
+            color: #718096;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .heatmap-container {
+                grid-template-columns: 80px repeat(5, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .summary-card {
+                padding: 1rem;
+            }
+            
+            .summary-card .value {
+                font-size: 1.5rem;
+            }
+            
+            .data-table {
+                font-size: 0.8rem;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 0.5rem;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .table-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .air-quality-status h3 {
+                font-size: 1.2rem;
+            }
+            
+            .sidebar {
+                width: 200px;
+            }
+            
+            .heatmap-container {
+                grid-template-columns: 60px repeat(3, 1fr);
+            }
+            
+            .heatmap-header-cell,
+            .heatmap-label-cell {
+                font-size: 0.6rem;
+            }
+            
+            .heatmap-value {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .header-title {
+                font-size: 1.2rem;
+            }
+            
+            .header-subtitle {
+                font-size: 0.875rem;
+            }
+            
+            .dashboard-section {
+                padding: 1rem;
+            }
+            
+            .chart-container {
+                padding: 1rem;
+            }
+            
+            .charts-row {
+                gap: 1rem;
+            }
+            
+            .heatmap-container {
+                grid-template-columns: 50px repeat(2, 1fr);
+            }
+            
+            .heatmap-legend {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="header-title">AirAware – Smart Air Quality Monitoring Dashboard</h1>
+                    <p class="header-subtitle">Delhi, India – Air Quality Analytics</p>
+                </div>
+                <div class="header-right">
+                    <button class="refresh-button" id="refreshButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="refresh-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Refresh
+                    </button>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="profile-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="profile-svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <div class="profile-menu" id="profileMenu">
+                            <div class="profile-menu-item">Profile</div>
+                            <div class="profile-menu-item">Settings</div>
+                            <div class="profile-menu-item">Logout</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <!-- Sidebar Toggle -->
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-toggle-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+
+            <!-- Sidebar -->
+            <aside class="sidebar open" id="sidebar">
+                <div class="sidebar-content">
+                    <nav class="sidebar-nav">
+                        <ul class="sidebar-menu">
+                            <li class="sidebar-menu-item active">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                                <span class="sidebar-text">Dashboard</span>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                                <span class="sidebar-text">Analytics</span>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span class="sidebar-text">Historical Data</span>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                                <span class="sidebar-text">Alerts</span>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                </svg>
+                                <span class="sidebar-text">Predictions</span>
+                            </li>
+                            <li class="sidebar-menu-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span class="sidebar-text">Settings</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content with-sidebar" id="mainContent">
+                <div class="dashboard-grid">
+                    <!-- Summary Cards Section -->
+                    <section class="dashboard-section">
+                        <div class="summary-cards">
+                            <h2>Air Quality Summary</h2>
+                            <div class="air-quality-status good">
+                                <h3>Air Quality: Good</h3>
+                                <p>Average PM2.5: 45.2 μg/m³</p>
+                            </div>
+                            <div class="cards-grid">
+                                <div class="summary-card">
+                                    <h3>PM2.5</h3>
+                                    <p class="value">45.2 μg/m³</p>
+                                    <p class="range">Range: 12.5 - 180.3 μg/m³</p>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 30%; background-color: #10B981;"></div>
+                                    </div>
+                                </div>
+                                <div class="summary-card">
+                                    <h3>PM10</h3>
+                                    <p class="value">89.7 μg/m³</p>
+                                    <p class="range">Range: 25.1 - 320.5 μg/m³</p>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 45%; background-color: #F59E0B;"></div>
+                                    </div>
+                                </div>
+                                <div class="summary-card">
+                                    <h3>CO2</h3>
+                                    <p class="value">1.2 ppm</p>
+                                </div>
+                                <div class="summary-card">
+                                    <h3>NO2</h3>
+                                    <p class="value">32.4 μg/m³</p>
+                                </div>
+                                <div class="summary-card">
+                                    <h3>SO2</h3>
+                                    <p class="value">18.7 μg/m³</p>
+                                </div>
+                                <div class="summary-card">
+                                    <h3>Temperature</h3>
+                                    <p class="value">26.3°C</p>
+                                </div>
+                                <div class="summary-card">
+                                    <h3>Humidity</h3>
+                                    <p class="value">48.2%</p>
+                                </div>
+                                <div class="summary-card">
+                                    <h3>Total Records</h3>
+                                    <p class="value">1,461</p>
+                                    <p class="date-range">Jan 1, 2021 to Dec 31, 2021</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Charts Section -->
+                    <section class="dashboard-section">
+                        <div class="charts-section">
+                            <h2 class="section-title">Air Quality Trends</h2>
+                            <div class="charts-row">
+                                <div class="chart-container">
+                                    <h3 class="chart-title">PM2.5 Trend (Last 90 days)</h3>
+                                    <div class="line-chart">
+                                        <div class="chart-grid">
+                                            <div class="y-axis">
+                                                <div class="y-label">200</div>
+                                                <div class="y-label">100</div>
+                                                <div class="y-label">0</div>
+                                            </div>
+                                            <div class="chart-area">
+                                                <svg class="chart-svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+                                                    <line x1="0" y1="0" x2="400" y2="0" class="grid-line" />
+                                                    <line x1="0" y1="100" x2="400" y2="100" class="grid-line" />
+                                                    <line x1="0" y1="200" x2="400" y2="200" class="grid-line" />
+                                                    <polyline fill="none" stroke="#4F46E5" stroke-width="2" points="0,180 44.4,160 88.8,140 133.2,120 177.6,100 222,80 266.4,60 310.8,40 355.2,20 400,40" />
+                                                    <circle cx="0" cy="180" r="3" fill="#4F46E5" class="data-point" />
+                                                    <circle cx="44.4" cy="160" r="3" fill="#4F46E5" class="data-point" />
+                                                    <circle cx="88.8" cy="140" r="3" fill="#4F46E5" class="data-point" />
+                                                    <circle cx="133.2" cy="120" r="3" fill="#4F46E5" class="data-point" />
+                                                    <circle cx="177.6" cy="100" r="3" fill="#4F46E5" class="data-point" />
+                                                    <circle cx="222" cy="80" r="3" fill="#4F46E5" class="data-point" />
+                                                    <circle cx="266.4" cy="60" r="3" fill="#4F46E5" class="data-point" />
+                                                    <circle cx="310.8" cy="40" r="3" fill="#4F46E5" class="data-point" />
+                                                    <circle cx="355.2" cy="20" r="3" fill="#4F46E5" class="data-point" />
+                                                    <circle cx="400" cy="40" r="3" fill="#4F46E5" class="data-point" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="x-axis">
+                                            <div class="x-label">Start</div>
+                                            <div class="x-label">Middle</div>
+                                            <div class="x-label">End</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chart-container">
+                                    <h3 class="chart-title">PM10 Trend (Last 90 days)</h3>
+                                    <div class="line-chart">
+                                        <div class="chart-grid">
+                                            <div class="y-axis">
+                                                <div class="y-label">400</div>
+                                                <div class="y-label">200</div>
+                                                <div class="y-label">0</div>
+                                            </div>
+                                            <div class="chart-area">
+                                                <svg class="chart-svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+                                                    <line x1="0" y1="0" x2="400" y2="0" class="grid-line" />
+                                                    <line x1="0" y1="100" x2="400" y2="100" class="grid-line" />
+                                                    <line x1="0" y1="200" x2="400" y2="200" class="grid-line" />
+                                                    <polyline fill="none" stroke="#0EA5E9" stroke-width="2" points="0,160 44.4,140 88.8,120 133.2,100 177.6,80 222,60 266.4,40 310.8,20 355.2,40 400,60" />
+                                                    <circle cx="0" cy="160" r="3" fill="#0EA5E9" class="data-point" />
+                                                    <circle cx="44.4" cy="140" r="3" fill="#0EA5E9" class="data-point" />
+                                                    <circle cx="88.8" cy="120" r="3" fill="#0EA5E9" class="data-point" />
+                                                    <circle cx="133.2" cy="100" r="3" fill="#0EA5E9" class="data-point" />
+                                                    <circle cx="177.6" cy="80" r="3" fill="#0EA5E9" class="data-point" />
+                                                    <circle cx="222" cy="60" r="3" fill="#0EA5E9" class="data-point" />
+                                                    <circle cx="266.4" cy="40" r="3" fill="#0EA5E9" class="data-point" />
+                                                    <circle cx="310.8" cy="20" r="3" fill="#0EA5E9" class="data-point" />
+                                                    <circle cx="355.2" cy="40" r="3" fill="#0EA5E9" class="data-point" />
+                                                    <circle cx="400" cy="60" r="3" fill="#0EA5E9" class="data-point" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="x-axis">
+                                            <div class="x-label">Start</div>
+                                            <div class="x-label">Middle</div>
+                                            <div class="x-label">End</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="dashboard-section">
+                        <div class="charts-section">
+                            <h2 class="section-title">Pollutant Comparison & Weather Data</h2>
+                            <div class="charts-row">
+                                <div class="chart-container">
+                                    <h3 class="chart-title">CO2, NO2, SO2 Comparison</h3>
+                                    <div class="bar-chart">
+                                        <div class="chart-grid">
+                                            <div class="y-axis">
+                                                <div class="y-label">50</div>
+                                                <div class="y-label">25</div>
+                                                <div class="y-label">0</div>
+                                            </div>
+                                            <div class="chart-area">
+                                                <svg class="chart-svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+                                                    <line x1="0" y1="0" x2="400" y2="0" class="grid-line" />
+                                                    <line x1="0" y1="100" x2="400" y2="100" class="grid-line" />
+                                                    <line x1="0" y1="200" x2="400" y2="200" class="grid-line" />
+                                                    <rect x="50" y="150" width="50" height="50" fill="#4F46E5" class="bar" />
+                                                    <rect x="150" y="100" width="50" height="100" fill="#0EA5E9" class="bar" />
+                                                    <rect x="250" y="120" width="50" height="80" fill="#8B5CF6" class="bar" />
+                                                    <text x="75" y="195" text-anchor="middle" class="bar-label">CO2</text>
+                                                    <text x="175" y="195" text-anchor="middle" class="bar-label">NO2</text>
+                                                    <text x="275" y="195" text-anchor="middle" class="bar-label">SO2</text>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chart-container">
+                                    <h3 class="chart-title">Temperature & Humidity over Time</h3>
+                                    <div class="multi-chart">
+                                        <div class="chart-grid">
+                                            <div class="y-axis left">
+                                                <div class="y-label">40</div>
+                                                <div class="y-label">30</div>
+                                                <div class="y-label">20</div>
+                                            </div>
+                                            <div class="y-axis right">
+                                                <div class="y-label">100</div>
+                                                <div class="y-label">75</div>
+                                                <div class="y-label">50</div>
+                                            </div>
+                                            <div class="chart-area">
+                                                <svg class="chart-svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+                                                    <line x1="0" y1="0" x2="400" y2="0" class="grid-line" />
+                                                    <line x1="0" y1="100" x2="400" y2="100" class="grid-line" />
+                                                    <line x1="0" y1="200" x2="400" y2="200" class="grid-line" />
+                                                    <polyline fill="none" stroke="#4F46E5" stroke-width="2" points="0,80 44.4,70 88.8,60 133.2,50 177.6,40 222,50 266.4,60 310.8,70 355.2,80 400,90" />
+                                                    <polyline fill="none" stroke="#0EA5E9" stroke-width="2" stroke-dasharray="5,5" points="0,120 44.4,110 88.8,100 133.2,90 177.6,80 222,90 266.4,100 310.8,110 355.2,120 400,130" />
+                                                    <rect x="10" y="10" width="15" height="15" fill="#4F46E5" />
+                                                    <text x="30" y="22" class="legend-text">Temperature</text>
+                                                    <rect x="120" y="10" width="15" height="15" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-dasharray="5,5" />
+                                                    <text x="140" y="22" class="legend-text">Humidity</text>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Heatmap Section -->
+                    <section class="dashboard-section">
+                        <div class="heatmap-section">
+                            <h2 class="section-title">Pollution Severity Heatmap</h2>
+                            <div class="chart-container">
+                                <h3 class="chart-title">Last 7 Days Pollution Levels</h3>
+                                <div class="heatmap-container">
+                                    <div class="heatmap-header-cell"></div>
+                                    <div class="heatmap-header-cell">Mon</div>
+                                    <div class="heatmap-header-cell">Tue</div>
+                                    <div class="heatmap-header-cell">Wed</div>
+                                    <div class="heatmap-header-cell">Thu</div>
+                                    <div class="heatmap-header-cell">Fri</div>
+                                    <div class="heatmap-header-cell">Sat</div>
+                                    <div class="heatmap-header-cell">Sun</div>
+                                    
+                                    <div class="heatmap-label-cell">PM2.5</div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">42</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">38</span></div>
+                                    <div class="heatmap-cell bg-yellow-500"><span class="heatmap-value">65</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">45</span></div>
+                                    <div class="heatmap-cell bg-orange-500"><span class="heatmap-value">120</span></div>
+                                    <div class="heatmap-cell bg-red-500"><span class="heatmap-value">180</span></div>
+                                    <div class="heatmap-cell bg-yellow-500"><span class="heatmap-value">85</span></div>
+                                    
+                                    <div class="heatmap-label-cell">PM10</div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">78</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">65</span></div>
+                                    <div class="heatmap-cell bg-yellow-500"><span class="heatmap-value">120</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">82</span></div>
+                                    <div class="heatmap-cell bg-orange-500"><span class="heatmap-value">210</span></div>
+                                    <div class="heatmap-cell bg-red-500"><span class="heatmap-value">320</span></div>
+                                    <div class="heatmap-cell bg-yellow-500"><span class="heatmap-value">150</span></div>
+                                    
+                                    <div class="heatmap-label-cell">CO2</div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">1.1</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">1.0</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">1.2</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">1.1</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">1.3</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">1.4</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">1.2</span></div>
+                                    
+                                    <div class="heatmap-label-cell">NO2</div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">25</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">22</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">30</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">28</span></div>
+                                    <div class="heatmap-cell bg-yellow-500"><span class="heatmap-value">65</span></div>
+                                    <div class="heatmap-cell bg-orange-500"><span class="heatmap-value">120</span></div>
+                                    <div class="heatmap-cell bg-yellow-500"><span class="heatmap-value">75</span></div>
+                                    
+                                    <div class="heatmap-label-cell">SO2</div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">12</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">10</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">15</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">14</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">18</span></div>
+                                    <div class="heatmap-cell bg-yellow-500"><span class="heatmap-value">45</span></div>
+                                    <div class="heatmap-cell bg-green-500"><span class="heatmap-value">22</span></div>
+                                </div>
+                                
+                                <div class="heatmap-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color bg-green-500"></div>
+                                        <span>Good</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color bg-yellow-500"></div>
+                                        <span>Moderate</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color bg-orange-500"></div>
+                                        <span>Unhealthy (Sensitive)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color bg-red-500"></div>
+                                        <span>Unhealthy</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color bg-purple-500"></div>
+                                        <span>Very Unhealthy</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color bg-red-800"></div>
+                                        <span>Hazardous</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Alerts Section -->
+                    <section class="dashboard-section">
+                        <div class="alerts-section">
+                            <div class="section-header">
+                                <h2 class="section-title">Air Quality Alerts</h2>
+                                <button class="refresh-button small" id="refreshAlerts">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="refresh-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                    Refresh
+                                </button>
+                            </div>
+                            
+                            <div class="alerts-container">
+                                <div class="alert-card alert-warning">
+                                    <div class="alert-header">
+                                        <div class="alert-type">PM10</div>
+                                        <div class="alert-level">Unhealthy</div>
+                                    </div>
+                                    <div class="alert-message">PM10 level is 320.5 μg/m³ - Unhealthy</div>
+                                    <div class="alert-recommendation"><strong>Recommendation:</strong> Limit outdoor exertion</div>
+                                    <div class="alert-footer">
+                                        <div class="alert-value">320.5 μg/m³</div>
+                                        <div class="alert-time">Nov 20, 2025 14:30</div>
+                                    </div>
+                                </div>
+                                <div class="alert-card alert-caution">
+                                    <div class="alert-header">
+                                        <div class="alert-type">NO2</div>
+                                        <div class="alert-level">High</div>
+                                    </div>
+                                    <div class="alert-message">NO2 level is 120.3 μg/m³ - High</div>
+                                    <div class="alert-recommendation"><strong>Recommendation:</strong> Avoid traffic areas</div>
+                                    <div class="alert-footer">
+                                        <div class="alert-value">120.3 μg/m³</div>
+                                        <div class="alert-time">Nov 19, 2025 09:15</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Recent Data Table -->
+                    <section class="dashboard-section">
+                        <div class="recent-data-table">
+                            <div class="section-header">
+                                <h2 class="section-title">Recent Air Quality Readings</h2>
+                                <div class="table-controls">
+                                    <button class="refresh-button-table" id="refreshTable">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="refresh-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                        Refresh Data
+                                    </button>
+                                    <span class="record-count">50 records</span>
+                                </div>
+                            </div>
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortable">Date & Time ↑</th>
+                                            <th class="sortable">PM2.5 (μg/m³)</th>
+                                            <th class="sortable">PM10 (μg/m³)</th>
+                                            <th class="sortable">CO2 (ppm)</th>
+                                            <th class="sortable">NO2 (μg/m³)</th>
+                                            <th class="sortable">SO2 (μg/m³)</th>
+                                            <th class="sortable">Temperature (°C)</th>
+                                            <th class="sortable">Humidity (%)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="good">
+                                            <td>Nov 22, 2025 14:00</td>
+                                            <td class="value">42.5 <div class="status-indicator"></div></td>
+                                            <td>78.3</td>
+                                            <td>1.2</td>
+                                            <td>25.1</td>
+                                            <td>12.4</td>
+                                            <td>26.3</td>
+                                            <td>48.2</td>
+                                        </tr>
+                                        <tr class="good">
+                                            <td>Nov 22, 2025 13:00</td>
+                                            <td class="value">38.7 <div class="status-indicator"></div></td>
+                                            <td>65.2</td>
+                                            <td>1.1</td>
+                                            <td>22.8</td>
+                                            <td>10.7</td>
+                                            <td>25.8</td>
+                                            <td>49.5</td>
+                                        </tr>
+                                        <tr class="moderate">
+                                            <td>Nov 22, 2025 12:00</td>
+                                            <td class="value">65.3 <div class="status-indicator"></div></td>
+                                            <td>120.7</td>
+                                            <td>1.3</td>
+                                            <td>30.2</td>
+                                            <td>15.8</td>
+                                            <td>27.1</td>
+                                            <td>47.8</td>
+                                        </tr>
+                                        <tr class="good">
+                                            <td>Nov 22, 2025 11:00</td>
+                                            <td class="value">45.1 <div class="status-indicator"></div></td>
+                                            <td>82.4</td>
+                                            <td>1.1</td>
+                                            <td>28.6</td>
+                                            <td>14.2</td>
+                                            <td>26.7</td>
+                                            <td>48.9</td>
+                                        </tr>
+                                        <tr class="unhealthy">
+                                            <td>Nov 22, 2025 10:00</td>
+                                            <td class="value">180.3 <div class="status-indicator"></div></td>
+                                            <td>320.5</td>
+                                            <td>1.4</td>
+                                            <td>65.7</td>
+                                            <td>45.3</td>
+                                            <td>28.2</td>
+                                            <td>46.1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Footer -->
+                <footer class="dashboard-footer">
+                    <div class="footer-content">
+                        <p>AirAware © 2025 – Smart Air Quality Prediction System</p>
+                    </div>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+            sidebar.classList.toggle('collapsed');
+        });
+
+        // Toggle profile menu
+        document.getElementById('profileDropdown').addEventListener('click', function() {
+            const menu = document.getElementById('profileMenu');
+            menu.classList.toggle('show');
+        });
+
+        // Close profile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const profileDropdown = document.getElementById('profileDropdown');
+            const profileMenu = document.getElementById('profileMenu');
+            
+            if (!profileDropdown.contains(event.target)) {
+                profileMenu.classList.remove('show');
+            }
+        });
+
+        // Refresh button functionality
+        document.getElementById('refreshButton').addEventListener('click', function() {
+            location.reload();
+        });
+
+        document.getElementById('refreshAlerts').addEventListener('click', function() {
+            alert('Alerts refreshed!');
+        });
+
+        document.getElementById('refreshTable').addEventListener('click', function() {
+            alert('Table data refreshed!');
+        });
+
+        // Table sorting functionality
+        const tableHeaders = document.querySelectorAll('.data-table th.sortable');
+        tableHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                // Simple sorting indicator toggle
+                const currentText = this.textContent;
+                if (currentText.includes('↑')) {
+                    this.textContent = currentText.replace('↑', '↓');
+                } else if (currentText.includes('↓')) {
+                    this.textContent = currentText.replace('↓', '');
+                } else {
+                    this.textContent = currentText + ' ↑';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
